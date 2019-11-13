@@ -1,0 +1,7 @@
+{
+  "name": "Yield_Calculator",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

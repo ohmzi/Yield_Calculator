@@ -1,0 +1,35 @@
+@media (prefers-color-scheme: light) {
+    ion-toolbar {
+        --background: white;
+        color: black;
+    }
+    .verticalScrollContainer {
+        background: white;
+    }
+    ion-tab-bar {
+        --background: white;
+        color: black;
+    }
+    ion-label {
+        --background: white;
+        color: black;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    ion-toolbar {
+        --background: black;
+        color: white;
+    }
+    ion-tab-bar {
+        --background: #1A1B1E;
+        color: white;
+    }
+    ion-label {
+        --background: darkgrey;
+        color: white;
+    }
+    .verticalScrollContainer {
+        background: black;
+    }
+}

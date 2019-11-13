@@ -1,0 +1,41 @@
+@media (prefers-color-scheme: light) {
+    ion-toolbar {
+        --background: white;
+        color: black;
+    }
+    .verticalScrollContainer {
+        background: white;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    ion-toolbar {
+        --background: black;
+        color: white;
+    }
+    .verticalScrollContainer {
+        background: black;
+    }
+}
+
+ion-card {
+    margin: 0px !important;
+    padding: 0px;
+}
+
+ion-col {
+    --ion-padding: 0px;
+    --ion-grid-columns: 2;
+    flex-wrap: nowrap;
+    align-items: stretch;
+}
+
+ion-row {
+    --ion-padding: 0px;
+    align-items: stretch;
+    flex-wrap: nowrap;
+}
+
+ion-grid {
+    flex-wrap: nowrap;
+}
