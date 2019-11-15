@@ -14,7 +14,7 @@
                 <div>
                     <ion-card class="--ion-padding: 0px">
                         <ion-item>
-                            <ion-label class="ion-text-wrap" position="floating">Investment Cash</ion-label>
+                            <ion-label class="ion-text-wrap" position="floating">Inital Investment ($)</ion-label>
                             <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="cash" required (ionChange)="calculate()"></ion-input>
                         </ion-item>
                     </ion-card>
@@ -24,7 +24,7 @@
                 <div>
                     <ion-card>
                         <ion-item>
-                            <ion-label class="ion-text-wrap" position="floating">Intial Stock Cost ($) </ion-label>
+                            <ion-label class="ion-text-wrap" position="floating">Intial Stock Price ($)<br> <br> </ion-label>
                             <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="shareCost" required (ionChange)="calculate()"></ion-input>
                         </ion-item>
                     </ion-card>
@@ -34,7 +34,7 @@
                 <div>
                     <ion-card>
                         <ion-item>
-                            <ion-label class="ion-text-wrap" position="floating">+ - Stock Cost (%)</ion-label>
+                            <ion-label class="ion-text-wrap" position="floating">Annual Stock Price +/- (%) <br><br></ion-label>
                             <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="sharePerct" required color="{newStockColour}" (ionChange)="calculate()"></ion-input>
                         </ion-item>
                     </ion-card>
@@ -44,12 +44,23 @@
     </ion-grid>
     <ion-grid>
         <ion-row>
-
             <ion-col>
                 <div>
                     <ion-card>
                         <ion-item>
-                            <ion-label class="ion-text-wrap" position="floating">Dividend (%)</ion-label>
+                            <ion-label class="ion-text-wrap" position="floating">
+                                Number of years<br><br>
+                            </ion-label>
+                            <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="yearsNum" required (ionChange)="calculate()"></ion-input>
+                        </ion-item>
+                    </ion-card>
+                </div>
+            </ion-col>
+            <ion-col>
+                <div>
+                    <ion-card>
+                        <ion-item>
+                            <ion-label class="ion-text-wrap" position="floating">Quarterly Dividend Return (%)</ion-label>
                             <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="dividendPerct" required (ionChange)="calculate()"></ion-input>
                         </ion-item>
                     </ion-card>
@@ -59,24 +70,13 @@
                 <div>
                     <ion-card>
                         <ion-item>
-                            <ion-label class="ion-text-wrap" position="floating">+ - Dividend (%)</ion-label>
+                            <ion-label class="ion-text-wrap" position="floating">Annual Dividend +/-(%)</ion-label>
                             <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="dividendGainLoss" required (ionChange)="calculate()"></ion-input>
                         </ion-item>
                     </ion-card>
                 </div>
             </ion-col>
-            <ion-col>
-                <div>
-                    <ion-card>
-                        <ion-item>
-                            <ion-label class="ion-text-wrap" position="floating">
-                                Number of years
-                            </ion-label>
-                            <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="yearsNum" required (ionChange)="calculate()"></ion-input>
-                        </ion-item>
-                    </ion-card>
-                </div>
-            </ion-col>
+
         </ion-row>
     </ion-grid>
     <ion-grid>
@@ -87,9 +87,9 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-grid>
+    <ion-grid fixed="true">
         <ion-row>
-            <ion-col>
+            <ion-col size="1">
                 <div>
                     <ion-card *ngIf="completion">
                         <ion-item fill="solid" expand="block" color="medium" style="height:stretch;">
@@ -98,7 +98,7 @@
                     </ion-card>
                 </div>
             </ion-col>
-            <ion-col>
+            <ion-col size="1">
                 <div>
                     <ion-card *ngIf="completion">
                         <ion-item fill="solid" expand="block" color={{newProjSPColour}}>
@@ -107,11 +107,11 @@
                     </ion-card>
                 </div>
             </ion-col>
-            <ion-col>
+            <ion-col size="1">
                 <div>
                     <ion-card *ngIf="completion">
                         <ion-item fill="solid" expand="block" color={{newStockColour}}>
-                            <ion-label class="ion-text-wrap">Projected additional stocks: {{newStocks}}</ion-label>
+                            <ion-label class="ion-text-wrap">Additional Stocks: {{newStocks}}</ion-label>
                         </ion-item>
                     </ion-card>
                 </div>

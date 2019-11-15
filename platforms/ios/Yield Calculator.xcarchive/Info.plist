@@ -9,9 +9,9 @@
 		<key>CFBundleIdentifier</key>
 		<string>Yield.Calculator</string>
 		<key>CFBundleShortVersionString</key>
-		<string>3.0.1</string>
+		<string>3.5.5</string>
 		<key>CFBundleVersion</key>
-		<string>3.0.1</string>
+		<string>3.5.5</string>
 		<key>SigningIdentity</key>
 		<string>Apple Development: omariqbal97@outlook.com (44C8G266LX)</string>
 		<key>Team</key>
@@ -20,7 +20,7 @@
 	<key>ArchiveVersion</key>
 	<integer>2</integer>
 	<key>CreationDate</key>
-	<date>2019-11-13T07:16:52Z</date>
+	<date>2019-11-15T21:01:03Z</date>
 	<key>Name</key>
 	<string>Yield Calculator</string>
 	<key>SchemeName</key>

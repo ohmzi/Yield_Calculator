@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="Yield.Calculator" version="3.0.1">
+<widget id="Yield.Calculator" version="3.5.5">
     <name>Yield Calculator</name>
-    <description>App custom designed for Youssef</description>
+    <description>Provides the yield return on stocks through their dividends and stock value changes.
+    And also calculates reinvesting every quarter, if there's sufficent return.</description>
     <author email="o_iqbal@live.concordia.ca">Designed by Omar Iqbal</author>
     <content src="index.html" />
     <access origin="*" />
@@ -14,13 +15,11 @@
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />
-    <preference name="SplashScreenDelay" value="10000" />
-    <preference name="FadeSplashScreenDuration" value="300" />
-    <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="FadeSplashScreenDuration" value="200" />
     <preference name="ShowSplashScreen" value="true" />
     <preference name="FadeSplashScreen" value="true" />
     <preference name="SplashMaintainAspectRatio" value="true" />
-    <preference name="SplashShowOnlyFirstTime" value="false" />
+    <preference name="SplashShowOnlyFirstTime" value="true" />
     <preference name="SplashScreen" value="screen" />
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">

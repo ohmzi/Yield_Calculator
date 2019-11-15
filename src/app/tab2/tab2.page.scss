@@ -24,18 +24,17 @@ ion-card {
 }
 
 ion-col {
-    --ion-padding: 0px;
-    --ion-grid-columns: 2;
+    --ion-grid-columns: 3;
     flex-wrap: nowrap;
-    align-items: stretch;
 }
 
 ion-row {
-    --ion-padding: 0px;
     align-items: stretch;
     flex-wrap: nowrap;
+    align-items: stretch;
 }
 
 ion-grid {
-    flex-wrap: nowrap;
+    --ion-grid-column-padding: 5px;
+    --ion-grid-row-padding: 0;
 }
