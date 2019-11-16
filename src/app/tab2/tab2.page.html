@@ -48,7 +48,12 @@
                 <div>
                     <ion-card>
                         <ion-item>
-                            <ion-label class="ion-text-wrap" position="floating">
+                            <ion-card *ngIf="maxYears">
+                                <ion-label color="danger" class="ion-text-wrap" position="floating">
+                                    {{yearString}} </ion-label>
+                            </ion-card>
+
+                            <ion-label *ngIf="!maxYears" class="ion-text-wrap" position="floating">
                                 Number of years<br><br>
                             </ion-label>
                             <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="yearsNum" required (ionChange)="calculate()"></ion-input>
@@ -93,7 +98,7 @@
                 <div>
                     <ion-card *ngIf="completion">
                         <ion-item fill="solid" expand="block" color="medium" style="height:stretch;">
-                            <ion-label class="ion-text-wrap">Final Net: ${{netCashed}}</ion-label>
+                            <ion-label class="ion-text-wrap">Profoilo: ${{netCashed}}</ion-label>
                         </ion-item>
                     </ion-card>
                 </div>
@@ -102,7 +107,7 @@
                 <div>
                     <ion-card *ngIf="completion">
                         <ion-item fill="solid" expand="block" color={{newProjSPColour}}>
-                            <ion-label class="ion-text-wrap">Projected Gain/Loss: ${{projReturn}}</ion-label>
+                            <ion-label class="ion-text-wrap">Return: ${{projReturn}}</ion-label>
                         </ion-item>
                     </ion-card>
                 </div>
