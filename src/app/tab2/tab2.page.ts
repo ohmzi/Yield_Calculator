@@ -11,18 +11,22 @@ export class Tab2Page {
   lossProjected: boolean;
   completion: boolean = false;
   newStockColour: string = "dark";
+  sharePerctColor: string = "dark";
+  dividendGainLossColor: string = "dark";
   newProjSPColour: string;
   perctGainLoss: string = "dark";
   yearString = "Number of years";
   maxYears: boolean = false;
+  dividendGainLossNegative: boolean = false;
 
   //input
-  cash:number;
+  cash: number;
   shareCost: number;
-  sharePerct: number;
+  sharePerctExternal: number;
   yearsNum: number;
   dividendPerct: number;
-  dividendGainLoss: number;
+  dividendGainLossExternal: number;
+  stockNegative: boolean = false;
 
   //output
   netCashed: number;
@@ -30,6 +34,8 @@ export class Tab2Page {
   newStocks: number;
 
   //calculation
+  dividendGainLossInternal: number;
+  sharePerctInternal: number;
   numStocks: number;
   dividentReturnsPerStock: number = 0;
   remainingCash: number;
@@ -43,12 +49,11 @@ export class Tab2Page {
   constructor() {}
 
   calculate() {
+    this.intitalCheck();
     if (this.yearsNum > 50) {
       this.maxYears = true;
       this.clearEverything();
       this.yearString = "Please reduce number of years of under 50";
-
-
     } else {
       this.maxYears = false;
       this.shareValue = this.shareCost;
@@ -59,8 +64,10 @@ export class Tab2Page {
         if (this.yearsNum <= 0) {
           console.log("Years have a problem!");
           this.clearEverything();
-
         } else {
+          //converting from percent to numeric
+          this.dividendPerctTS = this.dividendPerct / 100;
+          console.log("Divident Percentage: ", this.dividendPerctTS);
           for (var j = 0; j < this.yearsNum; j++) {
             console.log("Loop of year: ", j);
 
@@ -72,19 +79,8 @@ export class Tab2Page {
             this.remainingCash = this.totalPoolOfMoney - this.investedCashInit;
             console.log("Cash Remaining: ", this.remainingCash);
 
-            //converting from percent to numeric
-            this.dividendPerctTS = this.dividendPerct / 100;
-            console.log("Divident Percentage: ", this.dividendPerctTS);
-
             //////////////////////////////////////////////////////////////////
-            this.dividendPerctTS =
-              this.dividendPerctTS * (1 + this.dividendGainLoss / 100);
-            console.log(
-              "Divident Percentage % in year ",
-              j,
-              " ",
-              this.dividendPerctTS
-            );
+
             for (var i = 1; i < 4 + 1; i++) {
               this.dividentReturnsPerStock =
                 this.dividentReturnsPerStock +
@@ -126,8 +122,16 @@ export class Tab2Page {
                 );
               }
             }
-
-            this.shareValue = this.shareValue * (1 + this.sharePerct / 100);
+            this.dividendPerctTS =
+              this.dividendPerctTS * (1 + this.dividendGainLossInternal / 100);
+            console.log(
+              "Divident Percentage % in year ",
+              j,
+              " ",
+              this.dividendPerctTS
+            );
+            this.shareValue =
+              this.shareValue * (1 + this.sharePerctInternal / 100);
 
             this.investedCashInit =
               Math.round(
@@ -174,6 +178,7 @@ export class Tab2Page {
       if (this.netCashed >= this.cash) {
         this.newProjSPColour = "success";
       } else {
+        this.netCashed = 0;
         this.newProjSPColour = "danger";
       }
       if (this.newStocks < 1 || this.newStocks == null) {
@@ -191,6 +196,24 @@ export class Tab2Page {
     this.newStocks = 0;
     this.dividentReturnsPerStock = 0;
   }
+
+  intitalCheck() {
+    if (this.stockNegative == true) {
+      this.sharePerctInternal = -this.sharePerctExternal;
+      this.sharePerctColor = "danger";
+      console.log("checkbox: ", this.stockNegative);
+    } else {
+      this.sharePerctInternal = this.sharePerctExternal;
+      this.sharePerctColor = "dark";
+      console.log("checkbox: ", this.stockNegative);
+    }
+
+    if (this.dividendGainLossNegative == true) {
+      this.dividendGainLossInternal = -this.dividendGainLossExternal;
+      this.dividendGainLossColor = "danger";
+    } else {
+      this.dividendGainLossInternal = this.dividendGainLossExternal;
+      this.dividendGainLossColor = "dark";
+    }
+  }
 }
-//(ionChange)="calculate()"
-//<ion-button fill="solid" expand="block" color="success" (click)="calculate()">Calculate</ion-button>
