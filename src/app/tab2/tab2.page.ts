@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { variable } from "@angular/compiler/src/output/output_ast";
+import { NumberValueAccessor } from "@angular/forms";
 
 @Component({
   selector: "app-tab2",
@@ -21,10 +22,10 @@ export class Tab2Page {
 
   //input
   cash: number;
-  shareCost: number;
+  stockPrice: number;
   sharePerctExternal: number;
-  yearsNum: number;
-  dividendPerct: number;
+  numYear: number;
+  dividendPerctExternal: number;
   dividendGainLossExternal: number;
   stockNegative: boolean = false;
 
@@ -34,61 +35,71 @@ export class Tab2Page {
   newStocks: number;
 
   //calculation
+  something: number;
   dividendGainLossInternal: number;
   sharePerctInternal: number;
   numStocks: number;
   dividentReturnsPerStock: number = 0;
   remainingCash: number;
   investedCashInit: number;
-  dividendPerctTS: number;
+  dividendPerctInternal: number;
   shareValue: number;
-  shareValueIncrease: number;
+  shareValue2: number;
   totalPoolOfMoney: number;
   frozenNumStocks: number;
   numStocksPurchasedPerQuarter: number;
+  monthWhenNewStockBought:number;
+  
   constructor() {}
 
   calculate() {
     this.intitalCheck();
-    if (this.yearsNum > 50) {
+    if (this.numYear > 50) {
       this.maxYears = true;
       this.clearEverything();
       this.yearString = "Please reduce number of years of under 50";
     } else {
       this.maxYears = false;
-      this.shareValue = this.shareCost;
+      this.shareValue = this.stockPrice;
       this.totalPoolOfMoney = this.cash;
-      this.frozenNumStocks = Math.floor(this.totalPoolOfMoney / this.shareCost);
-      console.log("Outside of loop");
+      this.frozenNumStocks = Math.floor(
+        this.totalPoolOfMoney / this.stockPrice
+      );
+
+      console.log("frozenNumStocks", this.frozenNumStocks);
       if (this.frozenNumStocks >= 1) {
-        if (this.yearsNum <= 0) {
+        if (this.numYear <= 0) {
           console.log("Years have a problem!");
           this.clearEverything();
         } else {
           //converting from percent to numeric
-          this.dividendPerctTS = this.dividendPerct / 100;
-          console.log("Divident Percentage: ", this.dividendPerctTS);
-          for (var j = 0; j < this.yearsNum; j++) {
-            console.log("Loop of year: ", j);
+          this.dividendPerctInternal = this.dividendPerctExternal / 100;
+          console.log("Divident Percentage: ", this.dividendPerctInternal);
+
+          //year loop
+          for (var yearLoop= 0; yearLoop< this.numYear; yearLoop++) {
+            console.log("Loop of year: ", yearLoop);
 
             console.log("totalPoolOfMoney ", this.totalPoolOfMoney);
-            this.numStocks = Math.floor(this.totalPoolOfMoney / this.shareCost);
+            this.numStocks = Math.floor(
+              this.totalPoolOfMoney / this.stockPrice
+            );
             console.log("Number of stocks: ", this.numStocks);
-            this.investedCashInit = this.numStocks * this.shareCost;
+            this.investedCashInit = this.numStocks * this.stockPrice;
             console.log("Cash invested: ", this.investedCashInit);
             this.remainingCash = this.totalPoolOfMoney - this.investedCashInit;
             console.log("Cash Remaining: ", this.remainingCash);
 
             //////////////////////////////////////////////////////////////////
-
-            for (var i = 1; i < 4 + 1; i++) {
-              this.dividentReturnsPerStock =
-                this.dividentReturnsPerStock +
-                this.dividendPerctTS * this.shareCost;
-
+            // Quarterly loop
+            this.shareValue2=this.shareValue/4;
+            for (var quarterLoop= 3; quarterLoop<= 12; quarterLoop= quarterLoop+ 3) {
               console.log(
                 "Divident return Per Share end of quarter",
-                i,
+                "year: ",
+                yearLoop,
+                "month: ",
+                quarterLoop/ 3,
                 ": ",
                 this.dividentReturnsPerStock
               );
@@ -96,52 +107,82 @@ export class Tab2Page {
                 this.numStocksPurchasedPerQuarter = Math.floor(
                   this.dividentReturnsPerStock / this.shareValue
                 );
-                console.log(
-                  "Stocks value this quarter ",
-                  i,
-                  ": ",
-                  this.shareValue
-                );
+        
                 console.log(
                   "Number of stocks purchased in quarter ",
-                  i,
+                  quarterLoop,
                   ": ",
                   this.numStocksPurchasedPerQuarter
                 );
 
                 this.numStocks =
                   this.numStocks + this.numStocksPurchasedPerQuarter;
+                this.numStocksPurchasedPerQuarter = 0;
                 this.dividentReturnsPerStock =
                   this.dividentReturnsPerStock - this.shareValue;
 
-                console.log(
+                /*   console.log(
                   "Divident return Per Share end of quarter",
                   i,
                   ": ",
                   this.dividentReturnsPerStock
                 );
+                */
               }
-            }
-            this.dividendPerctTS =
-              this.dividendPerctTS * (1 + this.dividendGainLossInternal / 100);
-            console.log(
-              "Divident Percentage % in year ",
-              j,
-              " ",
-              this.dividendPerctTS
-            );
-            this.shareValue =
-              this.shareValue * (1 + this.sharePerctInternal / 100);
-
-            this.investedCashInit =
+              this.dividentReturnsPerStock =
+                this.dividentReturnsPerStock +
+                this.dividendPerctInternal * this.stockPrice;
+              console.log(
+                "Divident is still postive, Dividend value: ",
+                this.dividentReturnsPerStock
+              );
+              this.investedCashInit =
               Math.round(
-                (this.shareValue + this.dividentReturnsPerStock) *
+                (this.shareValue2 + this.dividentReturnsPerStock) *
                   this.numStocks *
                   100
               ) / 100;
+            }
+
+            this.something =
+              this.dividendPerctInternal *
+              (1 - this.dividendGainLossInternal / 100);
+
+            console.log("Something: ", this.something);
+
+            ////
+
+            this.dividendPerctInternal =
+              this.dividendPerctInternal + this.dividendGainLossInternal;
+            if (this.dividendPerctInternal < 0) {
+              this.dividendPerctInternal = 0;
+            }
+            console.log(
+              "Divident this year will be, Dividend value: ",
+              this.dividentReturnsPerStock
+            );
+
+            //dividendGainLossInternal
+            ////
+
+            console.log(
+              "Divident Percentage % in year ",
+              yearLoop,
+              " ",
+              this.dividendPerctInternal
+            );
+            this.shareValue =
+              this.shareValue * (1 + this.sharePerctInternal / 100);
+              console.log(
+                "Stocks value changed in year: ",
+                quarterLoop,
+                "to : ",
+                this.shareValue
+              );
+          
             console.log(
               "Share Value changed over year: ",
-              j,
+              yearLoop,
               ": ",
               this.shareValue
             );
@@ -190,8 +231,17 @@ export class Tab2Page {
     }
   }
 
+  private dividentNegativeMethod() {
+    this.dividendPerctInternal =
+      this.dividendPerctInternal * (1 - this.dividendGainLossInternal / 100);
+    console.log(
+      "Divident is still postive even after minusing, Dividend value: ",
+      this.dividentReturnsPerStock
+    );
+  }
+
   clearEverything() {
-    this.netCashed = this.cash;
+    this.netCashed = 0;
     this.projReturn = 0;
     this.newStocks = 0;
     this.dividentReturnsPerStock = 0;
@@ -209,11 +259,13 @@ export class Tab2Page {
     }
 
     if (this.dividendGainLossNegative == true) {
-      this.dividendGainLossInternal = -this.dividendGainLossExternal;
       this.dividendGainLossColor = "danger";
+      this.dividendGainLossInternal = -this.dividendGainLossExternal;
+      console.log("dividendGainLossInternal: ", this.dividendGainLossInternal);
     } else {
-      this.dividendGainLossInternal = this.dividendGainLossExternal;
       this.dividendGainLossColor = "dark";
+      this.dividendGainLossInternal = this.dividendGainLossExternal;
+      console.log("dividendGainLossInternal : ", this.dividendGainLossInternal);
     }
   }
 }

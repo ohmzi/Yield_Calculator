@@ -25,7 +25,7 @@
                     <ion-card>
                         <ion-item>
                             <ion-label class="ion-text-wrap" position="floating">Intial Stock Price ($)<br> <br> </ion-label>
-                            <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="shareCost" required (ionChange)="calculate()"></ion-input>
+                            <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="stockPrice" required (ionChange)="calculate()"></ion-input>
                         </ion-item>
                     </ion-card>
                 </div>
@@ -62,7 +62,7 @@
                             <ion-label *ngIf="!maxYears" class="ion-text-wrap" position="floating">
                                 Number of years<br><br>
                             </ion-label>
-                            <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="yearsNum" required (ionChange)="calculate()"></ion-input>
+                            <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="numYear" required (ionChange)="calculate()"></ion-input>
                         </ion-item>
                     </ion-card>
                 </div>
@@ -72,7 +72,7 @@
                     <ion-card>
                         <ion-item>
                             <ion-label class="ion-text-wrap" position="floating">Quarterly Dividend Return (%)</ion-label>
-                            <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="dividendPerct" required (ionChange)="calculate()"></ion-input>
+                            <ion-input clearOnEdit="true" inputmode="decimal" [(ngModel)]="dividendPerctExternal" required (ionChange)="calculate()"></ion-input>
                         </ion-item>
                     </ion-card>
                 </div>
