@@ -41,7 +41,7 @@ export class Tab2Page {
   numStocks: number;
   dividentReturnsPerStock: number;
   remainingCash: number;
-  investedCashInit: number;
+  quarterlyReturn: number;
   dividendPerctInternal: number;
   shareValue: number;
   shareValue2: number;
@@ -52,7 +52,9 @@ export class Tab2Page {
 
   constructor() {}
 
+  //stage1
   private calculate() {
+    //stage1
     console.log("---------calculate---------");
 
     if (this.numYear > 50 || this.numYear <= 0) {
@@ -75,25 +77,29 @@ export class Tab2Page {
     }
   }
 
+  //stage2
   private yearlyLoop() {
+    //stage2
     console.log("---------yearlyLoop---------");
 
     for (var yearLoop = 1; yearLoop <= this.numYear; yearLoop++) {
       console.log("---------Year", yearLoop, "---------");
       console.log("totalPoolOfMoney: ", this.totalPoolOfMoney);
       console.log("numStocks: ", this.numStocks);
-      console.log("investedCashInit: ", this.investedCashInit);
+      console.log("quarterlyReturn: ", this.quarterlyReturn);
       console.log("remainingCash: ", this.remainingCash);
       console.log("dividendPerctInternal: ", this.dividendPerctInternal);
       ///////////////////////////////////////////////////////////////////
       this.numStocks = Math.floor(this.totalPoolOfMoney / this.stockPrice);
-      this.investedCashInit = this.numStocks * this.stockPrice;
-      this.remainingCash = this.totalPoolOfMoney - this.investedCashInit;
-      this.shareValue2 = this.shareValue / 4;
+      this.quarterlyReturn = this.numStocks * this.stockPrice;
+      this.remainingCash = this.totalPoolOfMoney - this.quarterlyReturn;
+      this.quarterlyReturn = 0;
+      this.shareValue2 = this.shareValue / (this.numYear * 4);
+      console.log("shareValue2: ", this.shareValue2);
       console.log("numStocks: ", this.numStocks);
       console.log("totalPoolOfMoney: ", this.totalPoolOfMoney);
       console.log("stockPrice: ", this.stockPrice);
-      console.log("investedCashInit: ", this.investedCashInit);
+      console.log("quarterlyReturn: ", this.quarterlyReturn);
       console.log("remainingCash: ", this.remainingCash);
       console.log("shareValue2: ", this.shareValue2);
 
@@ -102,32 +108,17 @@ export class Tab2Page {
 
       this.annualPertChange();
 
-      console.log(
-        "Money that you invested has become: ",
-        this.investedCashInit
-      );
+      console.log("Money that you invested has become: ", this.quarterlyReturn);
       this.totalPoolOfMoney =
-        Math.round((this.remainingCash + this.investedCashInit) * 100) / 100;
+        Math.round((this.remainingCash + this.quarterlyReturn) * 100) / 100;
       console.log("totalPoolOfMoney ", this.totalPoolOfMoney);
       //////////////////////////////////////////////////////////////////
     }
   }
-
-  private annualPertChange() {
-    console.log("---------annualPertChange---------");
-
-    this.dividendPerctInternal =
-      this.dividendPerctInternal + this.dividendGainLossInternal;
-    console.log(
-      "Dividend % changed in year: ",
-      "to : ",
-      this.dividendPerctInternal
-    );
-    this.shareValue = this.shareValue * (1 + this.sharePerctInternal);
-    console.log("Stocks value changed in year: ", "to : ", this.shareValue);
-  }
-
+  //stage 3
   private quarterlyLoop() {
+    //stage 3
+
     console.log("---------quarterlyLoop---------");
 
     for (
@@ -140,18 +131,38 @@ export class Tab2Page {
       this.reinvesting();
       this.calculateDividend();
       this.quarterlyResults();
+      this.reinvesting();
     }
   }
 
+  //stage 7
+  private annualPertChange() {
+    //stage 7
+
+    console.log("---------annualPertChange---------");
+
+    this.dividendPerctInternal =
+      this.dividendPerctInternal + this.dividendGainLossInternal;
+    console.log(
+      "Dividend % changed in year: ",
+      "to : ",
+      this.dividendPerctInternal
+    );
+    this.shareValue = this.shareValue * (1 + this.sharePerctInternal);
+    console.log("Stocks value changed in year: ", "to : ", this.shareValue);
+  }
+  //stage 5
   private calculateDividend() {
+    //stage 5
+
     console.log("---------calculateDividend---------");
     console.log("dividendPerctInternal: ", this.dividendPerctInternal);
     console.log(
       "dividentReturnsPerStock Before Calcualting Quarterly: ",
       this.dividentReturnsPerStock
     );
-    console.log("StockPrice: ", this.stockPrice);
-    this.dividentReturnsPerStock = this.dividendPerctInternal * this.stockPrice;
+    console.log("StockPrice: ", this.shareValue);
+    this.dividentReturnsPerStock = this.dividendPerctInternal * this.shareValue;
     console.log(
       "dividentReturnsPerStock After Calcualting Quarterly: ",
       this.dividentReturnsPerStock
@@ -162,7 +173,9 @@ export class Tab2Page {
     }
   }
 
+  //stage 4 and also 6
   private reinvesting() {
+    //stage 4 and also 6
     if (this.dividentReturnsPerStock >= this.shareValue) {
       console.log("---------Reinvesting---------");
       this.numStocksPurchasedPerQuarter = Math.floor(
@@ -170,40 +183,37 @@ export class Tab2Page {
       );
       console.log("Stocks purchased: ", this.numStocksPurchasedPerQuarter);
       this.numStocks = this.numStocks + this.numStocksPurchasedPerQuarter;
-      for (var i = this.numStocksPurchasedPerQuarter; (i > 0); i--) {
-        console.log(
-          "For Counter to reduce the cost of new stocks purchased",
-          i
-        );
-        console.log(
-          "numStocksPurchasedPerQuarter: ",
-          this.numStocksPurchasedPerQuarter
-        );
-        console.log("shareValue: ", this.shareValue);
-        console.log("dividentReturnsPerStock: ", this.dividentReturnsPerStock);
+      for (var i = this.numStocksPurchasedPerQuarter; i > 0; i--) {
+        //console.log(  "For Counter to reduce the cost of new stocks purchased",  i );
+        //console.log( "numStocksPurchasedPerQuarter: ", this.numStocksPurchasedPerQuarter  );
+        // console.log("shareValue: ", this.shareValue);
+        // console.log("dividentReturnsPerStock: ", this.dividentReturnsPerStock);
 
         this.dividentReturnsPerStock =
           this.dividentReturnsPerStock - this.shareValue;
-        console.log("dividentReturnsPerStock: ", this.dividentReturnsPerStock);
+        //console.log("dividentReturnsPerStock: ", this.dividentReturnsPerStock);
         this.numStocksPurchasedPerQuarter =
           this.numStocksPurchasedPerQuarter - 1;
       }
-      console.log(
-        "numStocksPurchasedPerQuarter: ",
-        this.numStocksPurchasedPerQuarter
-      );
+      // console.log( "numStocksPurchasedPerQuarter: ",      this.numStocksPurchasedPerQuarter  );
     }
   }
 
+  // stage 6
   private quarterlyResults() {
+    // stage 6
     console.log("---------quarterlyResults---------");
-    this.investedCashInit =
-      Math.round(
-        (this.shareValue2 + this.dividentReturnsPerStock) * this.numStocks * 100
-      ) / 100;
+    this.quarterlyReturn =
+      this.quarterlyReturn + (this.shareValue2 + this.dividentReturnsPerStock);
+    console.log("shareValue2", this.shareValue2);
+    console.log("dividentReturnsPerStock", this.dividentReturnsPerStock);
+    console.log("numStocks", this.numStocks);
+    console.log("quarterlyReturn", this.quarterlyReturn);
   }
 
+  //stage 8
   private yearlyReturns() {
+    //stage 8
     console.log("---------yearlyReturns---------");
 
     console.log("totalPoolOfMoney ", this.totalPoolOfMoney);
@@ -231,7 +241,7 @@ export class Tab2Page {
     this.dividendPerctInternal = this.dividendPerctExternal / 100;
     this.frozenNumStocks = Math.floor(this.totalPoolOfMoney / this.stockPrice);
     this.dividentReturnsPerStock = 0;
-    this.investedCashInit = 0;
+    this.quarterlyReturn = 0;
 
     console.log("totalPoolOfMoney: ", this.totalPoolOfMoney);
     console.log("shareValue: ", this.shareValue);
